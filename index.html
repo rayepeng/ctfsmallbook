@@ -187,7 +187,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="IOT/Synology router/" title="IOT" class="md-tabs__link">
+        <a href="IOT/Cisco RV130W 1.0.3.44/" title="IOT" class="md-tabs__link">
           IOT
         </a>
       
@@ -479,8 +479,32 @@
 
 
   <li class="md-nav__item">
+    <a href="IOT/Cisco RV130W 1.0.3.44/" title="Cisco RV130W 1.0.3.44 复现过程" class="md-nav__link">
+      Cisco RV130W 1.0.3.44 复现过程
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="IOT/Synology router/" title="Synology router相关漏洞收集" class="md-nav__link">
       Synology router相关漏洞收集
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="IOT/ciscoRV130W复现/" title="ciscoRV130W 复现" class="md-nav__link">
+      ciscoRV130W 复现
     </a>
   </li>
 
@@ -505,6 +529,30 @@
   <li class="md-nav__item">
     <a href="IOT/华为路由器/" title="华为路由器Huawei HG532漏洞复现过程" class="md-nav__link">
       华为路由器Huawei HG532漏洞复现过程
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="IOT/积累一下Linux的网络配置常识/" title="积累一下Linux的网络配置常识" class="md-nav__link">
+      积累一下Linux的网络配置常识
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="IOT/群晖路由器——SRM_RT1900ac_8017/" title="SRM_RT1900ac_8017" class="md-nav__link">
+      SRM_RT1900ac_8017
     </a>
   </li>
 
@@ -1751,6 +1799,18 @@
 
 
   <li class="md-nav__item">
+    <a href="writeup/picoCTF2019/" title="picoCTF2019" class="md-nav__link">
+      picoCTF2019
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="writeup/redpwnctf2019/" title="redpwnctf2019" class="md-nav__link">
       redpwnctf2019
     </a>
@@ -2040,7 +2100,6 @@
 </pre></div>
 </td></tr></table>
 
-<p>​   </p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -2096,6 +2155,130 @@
 }
 </pre></div>
 </td></tr></table>
+
+<p>调试python</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>        {
+            &quot;name&quot;: &quot;Python: Current File&quot;,
+            &quot;type&quot;: &quot;python&quot;,
+            &quot;request&quot;: &quot;launch&quot;,
+            &quot;program&quot;: &quot;${file}&quot;,
+            &quot;console&quot;: &quot;integratedTerminal&quot;,
+            &quot;stopOnEntry&quot;: false
+        }
+</pre></div>
+</td></tr></table>
+
+<table>
+<thead>
+<tr>
+<th><a href="https://ww2.mathworks.cn/help/matlab/ref/imshow.html"><code>imshow</code></a></th>
+<th>显示图像</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ww2.mathworks.cn/help/matlab/ref/image.html"><code>image</code></a></td>
+<td>从数组显示图像</td>
+</tr>
+<tr>
+<td><a href="https://ww2.mathworks.cn/help/matlab/ref/imagesc.html"><code>imagesc</code></a></td>
+<td>显示使用经过标度映射的颜色的图像</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><a href="https://ww2.mathworks.cn/help/matlab/ref/imread.html"><code>imread</code></a></th>
+<th>从图形文件读取图像</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ww2.mathworks.cn/help/matlab/ref/imresize.html"><code>imresize</code></a></td>
+<td>调整图像大小</td>
+</tr>
+<tr>
+<td><a href="https://ww2.mathworks.cn/help/matlab/ref/imtile.html"><code>imtile</code></a></td>
+<td>将多个图像帧合并为一个矩形图块图像</td>
+</tr>
+<tr>
+<td><a href="https://ww2.mathworks.cn/help/matlab/ref/imwrite.html"><code>imwrite</code></a></td>
+<td>将图像写入图形文件</td>
+</tr>
+<tr>
+<td><a href="https://ww2.mathworks.cn/help/matlab/ref/imfinfo.html"><code>imfinfo</code></a></td>
+<td>有关图形文件的信息</td>
+</tr>
+<tr>
+<td><a href="https://ww2.mathworks.cn/help/matlab/ref/imformats.html"><code>imformats</code></a></td>
+<td>管理图像文件格式注册表</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><a href="https://ww2.mathworks.cn/help/matlab/ref/frame2im.html"><code>frame2im</code></a></th>
+<th>返回与影片帧关联的图像数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ww2.mathworks.cn/help/matlab/ref/im2frame.html"><code>im2frame</code></a></td>
+<td>将图像转换为影片帧</td>
+</tr>
+<tr>
+<td><a href="https://ww2.mathworks.cn/help/matlab/ref/im2java.html"><code>im2java</code></a></td>
+<td>将图像转换 Java 图像</td>
+</tr>
+<tr>
+<td><a href="https://ww2.mathworks.cn/help/matlab/ref/im2double.html"><code>im2double</code></a></td>
+<td>将图像转换为双精度值</td>
+</tr>
+<tr>
+<td><a href="https://ww2.mathworks.cn/help/matlab/ref/ind2rgb.html"><code>ind2rgb</code></a></td>
+<td>将索引图像转换为 RGB 图像</td>
+</tr>
+<tr>
+<td><a href="https://ww2.mathworks.cn/help/matlab/ref/rgb2gray.html"><code>rgb2gray</code></a></td>
+<td>将 RGB 图像或颜色图转换为灰度图</td>
+</tr>
+<tr>
+<td><a href="https://ww2.mathworks.cn/help/matlab/ref/rgb2ind.html"><code>rgb2ind</code></a></td>
+<td>将 RGB 图像转换为索引图像</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><a href="https://ww2.mathworks.cn/help/matlab/ref/imapprox.html"><code>imapprox</code></a></th>
+<th>通过减少颜色数量来近似处理索引图像</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ww2.mathworks.cn/help/matlab/ref/dither.html"><code>dither</code></a></td>
+<td>转换图像，通过抖动提高表观颜色分辨率</td>
+</tr>
+<tr>
+<td><a href="https://ww2.mathworks.cn/help/matlab/ref/cmpermute.html"><code>cmpermute</code></a></td>
+<td>重新排列颜色图中的颜色</td>
+</tr>
+<tr>
+<td><a href="https://ww2.mathworks.cn/help/matlab/ref/cmunique.html"><code>cmunique</code></a></td>
+<td>消除颜色图中的重复颜色；将灰度或真彩色图像转换为索引图像</td>
+</tr>
+</tbody>
+</table>
                 
                   
                 
